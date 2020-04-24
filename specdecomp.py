@@ -15,7 +15,7 @@ def normalize(img):
     return(normalized)
 
 
-def spectral_composition(img, axis=0, ratio_power=4):
+def spectralcomp(img, axis=0, ratio_power=4):
     '''
     Create an RGB composition of frequencies.
     '''
@@ -43,14 +43,22 @@ def spectral_composition(img, axis=0, ratio_power=4):
 
 
 if __name__ == '__main__':
-    filename = '/home/marcosrdac/Dropbox/pictures/wallpapers/favorites/water_drop_on_leaf.jpg'
+    import os
+
+    # parameters
+    filename = '~/pictures/wallpapers/favorites/water_drop_on_leaf.jpg'
     axis = 1
     ratio_power = 5
 
+    # opening image, making it grayscale
+    filename = os.path.expanduser(filename)
     img = np.mean(np.array(Image.open(filename)), axis=-1)
 
-    compostion = spectral_composition(img, axis=axis, ratio_power=ratio_power)
+    # decomposing image
+    compostion = spectralcomp(img, axis=axis, ratio_power=ratio_power)
 
+
+    # plotting results
     fig, ax = plt.subplots(1,2, figsize=(8,3))
 
     ax[0].set_title('Original Image')
@@ -61,5 +69,5 @@ if __name__ == '__main__':
 
     fig.tight_layout()
 
-    fig.savefig('asdk.png')
+    fig.savefig('waterdroponleaf.png')
     plt.show()
