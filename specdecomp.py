@@ -15,15 +15,19 @@ def normalize(img):
     return(normalized)
 
 
-def spectralcomp(img, axis=0, ratio_power=4):
+def spectralcomp(img, axis=0, rgp=None, gbp=None, ratio_power=4):
     '''
     Create an RGB composition of frequencies.
     '''
     # passing image to Fourier domain
     imgfour = np.fft.rfft(img, axis=axis)
     # deriving limits to separate frequencies
-    rg = int((1/4)**ratio_power * imgfour.shape[0])
-    gb = int((2/4)**ratio_power * imgfour.shape[0])
+    if rgp is None or gbp is None:
+        rg = int((1/3)**ratio_power * imgfour.shape[axis])
+        gb = int((2/3)**ratio_power * imgfour.shape[axis])
+    else:
+        rg = int(rgp * imgfour.shape[axis])
+        gb = int(gbp * imgfour.shape[axis])
     # creating channels in fouorier domain
     channelsfour = np.zeros((imgfour.shape[0], imgfour.shape[1], 3),
                             dtype=np.complex)
@@ -33,22 +37,24 @@ def spectralcomp(img, axis=0, ratio_power=4):
         channelsfour[rg:gb, :, 1] = imgfour[rg:gb, :]
         channelsfour[gb:, :, 2] = imgfour[gb:, :]
     else:
-        channelsfour[:, :rg,   0] = imgfour[:, :rg]
+        channelsfour[:, :rg, 0] = imgfour[:, :rg]
         channelsfour[:, rg:gb, 1] = imgfour[:, rg:gb]
-        channelsfour[:, gb:,   2] = imgfour[:, gb:]
+        channelsfour[:, gb:, 2] = imgfour[:, gb:]
     channels = np.fft.irfft(channelsfour, axis=axis)
     for i in range(3):
         channels[:, :, i] = normalize(channels[:, :, i])
     return(channels)
 
 
+
+
 if __name__ == '__main__':
     import os
 
     # parameters
-    filename = '~/pictures/wallpapers/favorites/water_drop_on_leaf.jpg'
+    filename = '/home/marcosrdac/Dropbox/documents/personal/photos/agua25l.png'
     axis = 1
-    ratio_power = 5
+    ratio_power = 4
 
     # opening image, making it grayscale
     filename = os.path.expanduser(filename)
@@ -57,9 +63,8 @@ if __name__ == '__main__':
     # decomposing image
     compostion = spectralcomp(img, axis=axis, ratio_power=ratio_power)
 
-
     # plotting results
-    fig, ax = plt.subplots(1,2, figsize=(8,3))
+    fig, ax = plt.subplots(1, 2, figsize=(8, 3))
 
     ax[0].set_title('Original Image')
     ax[0].imshow(img, cmap='Greys_r')
@@ -69,5 +74,5 @@ if __name__ == '__main__':
 
     fig.tight_layout()
 
-    fig.savefig('waterdroponleaf.png')
+    #fig.savefig('me.png')
     plt.show()
