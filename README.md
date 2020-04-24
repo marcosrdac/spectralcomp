@@ -27,11 +27,15 @@ pip3 install --user numpy, matplotlib, pillow
 ```
 
 
-### Examples on photos
+### Picture examples
 
-<p align="center"><img src="example/me.png" alt="me">
+<p align="center"><img src="example/pebbles.png" alt="pebbles">
+
+<p align="center"><img src="example/flower.png" alt="flower">
 
 <p align="center"><img src="example/starwars.png" alt="starwars">
+
+<p align="center"><img src="example/me.png" alt="me">
 
 <p align="center"><img src="example/waterdroponleaf.png" alt="waterdroponleaf">
 
