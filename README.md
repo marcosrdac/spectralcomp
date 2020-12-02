@@ -5,7 +5,7 @@ This python module makes spectral decomposition of an image into 3 channels. In 
 
 ## Usage as an image filter
 
-I discovered spectral decomposition as a technique used for interpretation of seismic lines (applied Geophysics), but you can also use it as a filter for photos, no one is going to arrest you. Make sure to play around with spectralcomp parameters!
+I discovered spectral decomposition as a technique for interpretation of seismic lines (applied Geophysics), but you can also use it as a filter for photos, no one is going to arrest you. Make sure to play around with spectralcomp parameters!
 
 
 ## Dependencies
